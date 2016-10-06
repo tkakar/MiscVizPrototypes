@@ -1,0 +1,107 @@
+.toolTip {
+    position: absolute;
+    display: none;
+    width: auto;
+    height: auto;
+    background: none repeat scroll 0 0 white;
+    border: 0 none;
+    border-radius: 8px 8px 8px 8px;
+    box-shadow: -3px 3px 15px #888888;
+    color: black;
+    font: 12px sans-serif;
+    padding: 5px;
+    text-align: center;
+}
+
+.underline {
+    text-align: center;
+    text-decoration: underline;
+}
+
+body {
+    padding: 10%;
+    padding-top: 0;
+}
+
+
+.root-container {
+    text-align: center;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: black;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+    font-family: sans-serif;
+    font-weight: 2;
+    font-size: 12px;
+}
+
+.tick line {
+    opacity: 0.15; 
+    shape-rendering: crispEdges;
+    z: 0;
+}
+
+
+.header-font {
+/* Embed this font from Google Fonts at
+https://www.google.com/fonts/specimen/Monda */ 
+    background-color: #fff;
+    /*color: #444;*/
+    font-family: cursive;
+    font-feature-settings: "'liga' 1";
+    font-kerning: auto;
+    line-height: 1.5em;
+}
+
+
+path { 
+    stroke: white;
+    stroke-width: 1.5;
+    fill: none;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #111;
+}
+
+.buttons{
+    background-color: #4CAF50; /* Green */
+    border: none;
+    margin:0;
+    color: white;
+    padding: 15px 32px;
+    font-size: 16px
+}
+
+.buttons:hover{
+    background-color: #111
+}
+
+
+
