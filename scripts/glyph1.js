@@ -8,27 +8,80 @@ var color = ['#016c59', '#d0d1e6', '#a6bddb', '#67a9cf', '#1c9099'];
 var Drugs_check =0;
 var obj = {};
 var list = [];
-
+var drugs_list = [];
 
 d3.select('#two-drugs').on('click', function() {
-    d3.selectAll("#drug_svg > *").remove();
+
+    d3.selectAll("#middle_container > *").remove();
     Drugs_check = 2
+    d3.select("h2").text("Graphs for " + Drugs_check+ " Drugs");
     read_data(Drugs_check)    
 });
 
+d3.select('#search_txbox').on('change', function() {
+
+    d3.select("h2").text("Graphs for searched Drug: " + this.value);
+    var search_drug = this.value
+    d3.selectAll("#middle_container > *").remove();
+    // Drugs_check = 2
+    // read_data(Drugs_check)  
+    // console.log(search_drug) 
+    search_Drugs(this.value)
+
+});
+
+window.onload = function load_glyphs(){
+  d3.selectAll("#middle_container > *").remove();
+  read_data(2)  
+}
+
 d3.select('#three-drugs').on('click', function() {
-    d3.selectAll("#drug_svg > *").remove();
+    d3.selectAll("#middle_container > *").remove();
     Drugs_check = 3
+    d3.select("h2").text("Graphs for " + Drugs_check+ " Drugs");
     read_data(Drugs_check)   
 });
 
 d3.select('#four-drugs').on('click', function() {
 
-    d3.selectAll("#drug_svg > *").remove();
+    d3.selectAll("#middle_container > *").remove();
     Drugs_check = 4
+    d3.select("h2").text("Graphs for " + Drugs_check+ " Drugs");
     read_data(Drugs_check) 
 });
 
+
+function search_Drugs(searchDrug){
+
+  d3.text("data/data.csv", function(unparsedData)
+      {
+       var data = d3.csv.parseRows(unparsedData);
+       for ( var row=0; row<data.length;row++){
+            var id = data[row][0]
+            var No_of_drugs = data[row][2]
+            var ADR = data [row][3]
+            var No_of_itmes = (Math.pow(2,No_of_drugs) - 1) * 3 + 4
+            drugs_split(data[row][4])
+            if(drugs_list.indexOf(searchDrug) > -1){
+                for ( i =4; i<No_of_itmes && data[row][i]!=''; i=i+3){
+                  /* Splitting the drug names to search for the specific drug*/
+                      // console.log(drugs_list)
+                      obj['name'] = data[row][i]
+                      obj['support']= +data[row][i+1]
+                      obj['Conf'] = +data[row][i+2]
+                      list.push(obj)
+                      obj ={}
+                  }
+                  // console.log( list)
+                       // break;
+                  plot(list, id, ADR, No_of_drugs)
+                  list = []
+              }
+            drugs_list = [];
+       }
+     });
+
+}
 function read_data(Drugs){
   
     d3.text("data/data.csv", function(unparsedData)
@@ -61,6 +114,8 @@ function read_data(Drugs){
 
 
 function plot(data,id, ADR, No_of_drugs){
+
+  // console.log(data,id, ADR, No_of_drugs)
        var No_of_rules = Math.pow(2, No_of_drugs) - 2
        // console.log(No_of_drugs, No_of_rules,id)
        var flag =0;
@@ -68,10 +123,19 @@ function plot(data,id, ADR, No_of_drugs){
        var check = No_of_drugs- 1;
        var angle = 360/ No_of_rules;
        var subrules_conf = [];
-       var main_width = 0;
+       var main_conf = find_Main_Conf(data)
+       var max_sub_conf = find_Max_Conf(data)
+       // console.log(main_radius)
 
-       
-      var svgContainer = d3.select("#drug_svg")
+       // origin = (main_conf + (2*max_sub_conf))/2
+
+
+       // width= main_conf + (2*max_sub_conf)+ originX
+       // height = main_conf + (2*max_sub_conf)+ originY
+      text_location=  originY + (main_conf/2) + max_sub_conf
+
+      // console.log(main_conf,2*max_sub_conf,  height, width)
+      var svgContainer = d3.select("#middle_container")
                       .append("svg")
                       .attr("width",width)
                       .attr("height", height)
@@ -149,9 +213,6 @@ function plot(data,id, ADR, No_of_drugs){
                         return (i)* angle * (pi)
                       }
                     })
-                            
-
-                         
 
        var paths =  MainCirlce.append("path")
         .attr("d", arc)
@@ -191,12 +252,36 @@ function plot(data,id, ADR, No_of_drugs){
 
       svgContainer.append("text")
         .attr("x",width/2)
-        .attr("y", 10)
+        .attr("y", 20)
         .attr("text-anchor", "middle")
-        .style('fill', 'Blue')
-        .style("font-size","12px")
+        .style('fill', '#1e0ad3')
+        .style("font-size","15px")
         .text( "Rank:   " + id); 
  }
  
  
+function find_Max_Conf(data){
+          /* slice:  to remove the main confidence to find the maximum of sub-rule's confidences*/
+          var data = data.slice(1)
+          // console.log(Math.max(...data.map(o => o.Conf)))
+          return Math.max(...data.map(o => o.Conf));
+}
 
+function find_Main_Conf(data){
+
+          // return data[0].Conf
+}
+
+
+function drugs_split(str){
+
+        /* To remove the square brackets from the drug names */
+            str = str.replace(/[\[\]']+/g,'')
+            str=  str.split(" ");
+
+            for (i = 0; i < str.length; i++){
+              drugs_list.push(str[i])
+            }
+
+          
+}

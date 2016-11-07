@@ -6,27 +6,80 @@ var margin = {top: 15, bottom: 30, left: 15, right: 15};
 var Drugs_check =0;
 var obj = {};
 var list = [];
+var drugs_list = [];
+
+/*  Default view is charts with Two drugs*/
+window.onload = function load_glyphs(){
+  d3.selectAll("#middle_container > *").remove();
+  read_data(2)  
+}
+
+/*For any searched drug*/
+
+d3.select('#search_txbox').on('change', function() {
+
+    d3.select("h2").text("Graphs for searched Drug: " + this.value);
+    var search_drug = this.value
+    d3.selectAll("#middle_container > *").remove();
+    // Drugs_check = 2
+    // read_data(Drugs_check)  
+    // console.log(search_drug) 
+    search_Drugs(this.value)
+
+});
 
 
 d3.select('#two-drugs').on('click', function() {
-    d3.selectAll("#drug_svg > *").remove();
+    d3.selectAll("#middle_container > *").remove();
     Drugs_check = 2
     read_data(Drugs_check)    
 });
 
 d3.select('#three-drugs').on('click', function() {
-    d3.selectAll("#drug_svg > *").remove();
+    d3.selectAll("#middle_container > *").remove();
     Drugs_check = 3
     read_data(Drugs_check)   
 });
 
 d3.select('#four-drugs').on('click', function() {
 
-    d3.selectAll("#drug_svg > *").remove();
+    d3.selectAll("#middle_container > *").remove();
     Drugs_check = 4
     read_data(Drugs_check) 
 });
 
+
+function search_Drugs(searchDrug){
+
+  d3.text("data/data.csv", function(unparsedData)
+      {
+       var data = d3.csv.parseRows(unparsedData);
+       for ( var row=0; row<data.length;row++){
+            var id = data[row][0]
+            var No_of_drugs = data[row][2]
+            var ADR = data [row][3]
+            var No_of_itmes = (Math.pow(2,No_of_drugs) - 1) * 3 + 4
+            drugs_split(data[row][4])
+            if(drugs_list.indexOf(searchDrug) > -1){
+                for ( i =4; i<No_of_itmes && data[row][i]!=''; i=i+3){
+                  /* Splitting the drug names to search for the specific drug*/
+                      // console.log(drugs_list)
+                      obj['name'] = data[row][i]
+                      obj['support']= +data[row][i+1]
+                      obj['Conf'] = +data[row][i+2]
+                      list.push(obj)
+                      obj ={}
+                  }
+                  // console.log( list)
+                       // break;
+                  plot(list, id, ADR, No_of_drugs)
+                  list = []
+              }
+            drugs_list = [];
+       }
+     });
+
+}
 function read_data(Drugs){
   
     d3.text("data/data.csv", function(unparsedData)
@@ -93,7 +146,7 @@ function plot(data,id, ADR, No_of_drugs){
                     // .outerTickSize(0);
 
 
-          var svg = d3.select("#drug_svg")
+          var svg = d3.select("#middle_container")
                       .append("svg")
                       .attr("width", width)
                       .attr("height", height)
@@ -200,3 +253,15 @@ function plot(data,id, ADR, No_of_drugs){
  }
  
 
+function drugs_split(str){
+
+        /* To remove the square brackets from the drug names, and split mulitple drugs */
+            str = str.replace(/[\[\]']+/g,'')
+            str=  str.split(" ");
+
+            for (i = 0; i < str.length; i++){
+              drugs_list.push(str[i])
+            }
+
+          
+}
