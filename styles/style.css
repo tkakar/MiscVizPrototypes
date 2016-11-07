@@ -1,3 +1,9 @@
+#main_container
+{
+    width: 100vw;
+}
+
+
 .toolTip {
     position: absolute;
     display: none;
@@ -18,14 +24,41 @@
     text-decoration: underline;
 }
 
-body {
+/*body {
     padding: 10%;
     padding-top: 0;
 }
+*/
+body {
+    margin: 0;
+    /*padding: 10px;*/
+    /*min-height: 100%;*/
+    width: 100%;
+}
 
+#detail_div{
+    border:1px solid #ebebe0;;
+}
 
-.root-container {
-    text-align: center;
+.div_outline {
+   
+}
+
+div#side_bar{
+     border: 1px solid #ebebe0;
+    float:left;
+    width :400px;
+    height: 1000px;
+    /*padding: 0 20px;*/
+    /*width:25%;*/
+}
+div#middle_container{
+     /*position:relative;*/
+     border: 1px solid #ebebe0;
+    /*height: 1000px;*/
+    /*float:right;*/
+    /*width : 75%;*/
+    margin-left: 400px;
 }
 
 .axis path,
@@ -66,12 +99,17 @@ path {
     fill: none;
 }
 
-ul {
+ul.menu {
+/*    display: block;
+    margin: 0 auto;*/
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
     background-color: #333;
+
+
+
 }
 
 li {
@@ -93,15 +131,36 @@ li a:hover {
 .buttons{
     background-color: #4CAF50; /* Green */
     border: none;
-    margin:0;
+    margin:0px 0px 10px px;
     color: white;
-    padding: 15px 32px;
-    font-size: 16px
+    padding: 10px 10px;
+    font-size: 14px;
 }
 
 .buttons:hover{
-    background-color: #111
+    background-color: #111;
+}
+
+div#search_div{
+     margin: 10px;
+
 }
 
 
+input[type=text] {
+/*    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;*/
+    font-style: italic;
+    font-size: 10px; 
 
+}
+
+main_heading_div{
+    padding:10px;
+}
+
+h2{
+    text-align: center;
+
+}

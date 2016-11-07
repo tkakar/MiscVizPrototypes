@@ -12,30 +12,36 @@
 
     <body> 
       
-       <ul>
-          <li><a href="/Users/tkakar/Dropbox/viz/barchart.html">Barcharts</a></li>
-          <li><a href="/Users/tkakar/Dropbox/viz/glyph1.html">Glyph1</a></li>
-          <li><a href="/Users/tkakar/Dropbox/viz/glyph2.html">Glyph2</a></li>
-          <li><a href="/Users/tkakar/Dropbox/viz/scatter.html">Overview</a></li>
-
-<!--           <li><a href="/Dropbox/viz/barcharts/barchart.html">Barcharts</a></li>
-          <li><a href="/Dropbox/viz/barcharts/glyph1.html">Glyph1</a></li>
-          <li><a href="/Dropbox/viz/barcharts/glyph2.html">Glyph2</a></li>
-          <li><a href="/Dropbox/viz/barcharts/scatter.html">Overview</a></li> -->
-        </ul>
-
-
-        <button id ="two-drugs"  class = "buttons" type="button">Two Drugs</button>
+<!--        <ul>
+          <li><a href="../viz/barchart.html">Barcharts</a></li>
+          <li><a href="../viz/glyph1.html">Glyph1</a></li>
+          <li><a href="../viz/glyph2.html">Glyph2</a></li>
+          <li><a href="../viz/scatter.html">Overview</a></li>
+        </ul> -->
+    <div id="main_container"> 
+       <ul class= "menu">
+                  <li><a href="../viz/barchart.html">Barcharts</a></li>
+                  <li><a href="../viz/glyph1.html">Glyph1</a></li>
+                  <li><a href="../viz/glyph2.html">Glyph2</a></li>
+                  <li><a href="../viz/scatter.html">Overview</a></li>
+              </ul>     
+    </div>
+<!--         <button id ="two-drugs"  class = "buttons" type="button">Two Drugs</button>
         <button id ="three-drugs" class = "buttons" type="button">Three Drugs</button>
-        <button id ="four-drugs" class = "buttons" type="button">Four Drugs</button>
+        <button id ="four-drugs" class = "buttons" type="button">Four Drugs</button> -->
 
 
 
 
         <!-- <h1 class="underline header-font">Conf with two drugs </h1> -->
 
-        <div id="drug_svg" >
-              <svg style="width:2500px;height:2500px;border:1px lightgray solid;" > </svg>
+        <div id="matrix_plot" >
+             <!--  <svg style="width:1650px;height:1650px;border:1px lightgray solid;" > </svg> -->
+        </div>
+        <div id="detail_div" > 
+              <svg id="detail_Drug" style="position: relative; width:1650px;height:30px;border:1px lightgray solid;" > </svg>
+              <svg id="detail_ADR" style="position: relative; width:1650px;height:30px;border:1px lightgray solid;" > </svg>
+              <svg id="detail_Score" style="position: relative; width:1650px;height:30px;border:1px lightgray solid;" > </svg>
         </div>
        <script type="text/javascript" src = "scripts/matrix.js"> </script>
       
