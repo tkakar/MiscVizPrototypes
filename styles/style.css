@@ -3,6 +3,10 @@
     width: 100vw;
 }
 
+#main_container_matrix{
+        width:2100px;
+}
+
 
 .toolTip {
     position: absolute;
@@ -36,9 +40,9 @@ body {
     width: 100%;
 }
 
-#detail_div{
+/*#detail_div{
     border:1px solid #ebebe0;;
-}
+}*/
 
 .div_outline {
    
@@ -55,10 +59,17 @@ div#side_bar{
 div#middle_container{
      /*position:relative;*/
      border: 1px solid #ebebe0;
+     margin-left: 400px;
     /*height: 1000px;*/
     /*float:right;*/
     /*width : 75%;*/
-    margin-left: 400px;
+    
+}
+
+div#matrix_plot,#detail_div{
+     border: 1px solid #ebebe0;
+     margin-left: 400px;
+     /*margin-top: 50px;*/
 }
 
 .axis path,

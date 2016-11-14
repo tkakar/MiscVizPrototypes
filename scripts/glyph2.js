@@ -53,8 +53,7 @@ d3.select('#four-drugs').on('click', function() {
 
 function search_Drugs(searchDrug){
 
-  d3.text("data/data.csv", function(unparsedData)
-      {
+  d3.text("data/data.csv", function(unparsedData){
        var data = d3.csv.parseRows(unparsedData);
        for ( var row=0; row<data.length;row++){
             var id = data[row][0]
@@ -80,8 +79,8 @@ function search_Drugs(searchDrug){
             drugs_list = [];
        }
      });
+  }
 
-}
 function read_data(Drugs){
   
     d3.text("data/data.csv", function(unparsedData)
