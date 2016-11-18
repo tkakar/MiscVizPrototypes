@@ -16,11 +16,10 @@ window.onload = function load_glyphs(){
 }
 
 d3.select('#search_txbox').on('change', function() {
-
+    d3.selectAll("#matrix_plot > *").remove();
     d3.select("h2").text("Graph for searched Drug: " + this.value);
     searchDrug = this.value
     search_check = 1
-    d3.selectAll("#matrix_plot > *").remove();
     read_data()
 });
 
@@ -57,7 +56,9 @@ function drugs_monitored(){
                       return d})
                     .on("click", function(d){
                          // console.log(d)
-                       d3.selectAll("#matrix_plot > *").remove();
+                          search_check = 0;    
+                        document.getElementById('search_txbox').value = "";
+                        d3.selectAll("#matrix_plot > *").remove();
                        plot(matrix, nodes, d)
                     });
  }
@@ -182,9 +183,8 @@ function plot(matix, nodes,hh){
                         return "orange"
                       else
                             return "#eff0f2";
+
                     }
-                      
-                           
                 
                     //     if ( d.id.search(hh) !=-1 || (search_check==1 && d.id.search(searchDrug) !=-1)  )
                     //       // {console.log(hh || (search_check==1 && d.id.search(searchDrug) !=-1))

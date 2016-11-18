@@ -8,21 +8,48 @@
       <script type="text/javascript" src="lib/d3.min.js"></script>
       <script type="text/javascript" src="lib/crossfilter/crossfilter.js"></script>
       <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+      <!-- <link rel="stylesheet" type="text/css" href="styles/style.css"/> -->
       <!-- // <script type="text/javascript" src="scripts/math.js"></script> -->
       <style>
-@import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,700);
+/*@import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,700);*/
 
-body {
+/*body {
   font-family: "Helvetica Neue";
-  margin: 40px auto;
+  margin-left: 40px auto;
+  margin-top: 40px auto;
   width: 960px;
   min-height: 2000px;
 }
 
 #body {
   position: relative;
+}*/
+
+ul.menu {
+/*    display: block;
+    margin: 0 auto;*/
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
 }
 
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #111;
+}
 footer {
   padding: 2em 0 1em 0;
   font-size: 12px;
@@ -48,11 +75,11 @@ h1, h2 {
   text-rendering: optimizeLegibility;
 }
 
-#body > p {
+/*#body > p {
   line-height: 1.5em;
   width: 1200px;
   text-rendering: optimizeLegibility;
-}
+}*/
 
 #charts {
   padding: 10px 0;
@@ -172,7 +199,16 @@ aside {
     </head>
 
 <body>
-
+<div id="main_container"> 
+       <ul class= "menu">
+                  <li><a href="../viz/barchart.html">Barcharts</a></li>
+                  <li><a href="../viz/glyph1.html">Glyph1</a></li>
+                  <li><a href="../viz/glyph2.html">Glyph2</a></li>
+                  <li><a href="../viz/scatter.html">Overview</a></li>
+                  <li><a href="../viz/crossfilter.html">CrossFilter</a></li>
+                  <li><a href="../viz/order_matrix.html">Re-Ordered Matrix</a></li>
+              </ul>     
+</div>
 <font size="+3">Drug Drug Interaction For Selected Support and Confidence </font><br/>
 
   
@@ -200,5 +236,5 @@ aside {
   Copyright 2012 <a href="http://squareup.com">Square, Inc.</a>
 </footer>  
 
-<script type="text/javascript" src = "scripts/cf_d.js"> </script>
+<script type="text/javascript" src = "scripts/cf_drugs.js"> </script>
 </html>
