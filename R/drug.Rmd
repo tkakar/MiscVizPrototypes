@@ -1,0 +1,29 @@
+---
+title: "drug"
+output: html_document
+---
+
+## Setup
+
+```{r}
+data <- read.csv('cf_data.csv', header = TRUE)
+```
+
+## Plots
+
+You can also embed plots, for example:
+
+```{r}
+library('ggplot2')
+ggplot(data, aes(support)) + geom_histogram() 
+ggplot(data, aes(confidence)) + geom_histogram() 
+
+gg <- ggplot(data, aes(support)) + geom_histogram() + facet_wrap(~ ADR, ncol = 4)
+ggsave("support.pdf", gg, height = 90, width = 10, units = "in", limitsize = FALSE)
+
+gg <- ggplot(data, aes(confidence)) + geom_histogram() + facet_wrap(~ ADR, ncol = 4)
+ggsave("confidence.pdf", gg, height = 90, width = 10, units = "in", limitsize = FALSE)
+
+length( unique(data$ADR) )
+
+```
