@@ -18,11 +18,26 @@ library('ggplot2')
 ggplot(data, aes(support)) + geom_histogram() 
 ggplot(data, aes(confidence)) + geom_histogram() 
 
+# support by ADR
 gg <- ggplot(data, aes(support)) + geom_histogram() + facet_wrap(~ ADR, ncol = 4)
-ggsave("support.pdf", gg, height = 90, width = 10, units = "in", limitsize = FALSE)
-
+ggsave("support-ADR.pdf", gg, height = 90, width = 10, units = "in", limitsize = FALSE)
+# confidence by ADR
 gg <- ggplot(data, aes(confidence)) + geom_histogram() + facet_wrap(~ ADR, ncol = 4)
-ggsave("confidence.pdf", gg, height = 90, width = 10, units = "in", limitsize = FALSE)
+ggsave("confidence-ADR.pdf", gg, height = 90, width = 10, units = "in", limitsize = FALSE)
+# confidence by date
+gg <- ggplot(data, aes(date)) + geom_histogram() + facet_wrap(~ ADR, ncol = 4)
+ggsave("date-ADR.pdf", gg, height = 90, width = 10, units = "in", limitsize = FALSE)
+
+# support by Drugs
+gg <- ggplot(data, aes(support)) + geom_histogram() + facet_wrap(~ Drugs, ncol = 4)
+ggsave("support-Drugs.pdf", gg, height = 90, width = 10, units = "in", limitsize = FALSE)
+# confidence by Drugs
+gg <- ggplot(data, aes(confidence)) + geom_histogram() + facet_wrap(~ Drugs, ncol = 4)
+ggsave("confidence-Drugs.pdf", gg, height = 90, width = 10, units = "in", limitsize = FALSE)
+# confidence by date
+gg <- ggplot(data, aes(confidence)) + geom_histogram() + facet_wrap(~ Drugs, ncol = 4)
+ggsave("date-Drugs.pdf", gg, height = 90, width = 10, units = "in", limitsize = FALSE)
+
 
 length( unique(data$ADR) )
 
