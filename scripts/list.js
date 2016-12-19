@@ -117,25 +117,37 @@ function plot(data){
                         .append("text")
                         // .attr("href", show_div_ADR)
                         .text(function(d, i) {
-                          // console.log(d)
+                          // console.log(d, d.values[0].id[0])
                           return d.values[0].id[0]//.split(",").join("\n");
                         })
-                        .on('click', showReport);
-;
+                        .on('click', plot_report_table);
                         
 
       Id_links.insert("br",":first-child");
+
+      /* Can show report by default for the first ID*/
+      // var Report_links = d3.select("#div_Ids")
+      //                   .selectAll("text")
+      //                   .data(data[0].values)
+      //                   .enter()
+      //                   .append("text")
+      //                   // .attr("href", show_div_ADR)
+      //                   .text(function(d, i) {
+      //                     // console.log(d, d.values[0].id[0])
+      //                     return d.values[0].id[0]//.split(",").join("\n");
+      //                   })
+      //                   .on('click', showReport);
 }
 
 function show_div_drug2(d,i){
-  console.log(d,i)
+      // console.log(d,i)
       d3.selectAll("#div_drug1 text").style("background-color","white")
       d3.select(this).style("background-color","#e0ebeb")
       // d3.select(this).style('fill','blue');
       d3.selectAll("#div_drug2 text ").remove();
       d3.selectAll("#div_ADR text ").remove();
       d3.selectAll("#div_Ids text ").remove();
-      d3.selectAll("#div_report text").remove();
+      d3.selectAll("#div_report table").remove();
 
 
 
@@ -168,7 +180,7 @@ function show_div_drug2(d,i){
                          .on ('click',show_div_Id);
 
       if (d.values.length > 1){
-              console.log(d.values[0], d.values[0].values[0].id)
+              // console.log(d.values[0], d.values[0].values[0].id)
              var id_length = d.values[0].values[0].id.length
              console.log(id_length)
 
@@ -180,18 +192,77 @@ function show_div_drug2(d,i){
       else
           d=d.values[0].values[0]                   
 
-     console.log(d, d.id )
-
-      // if(id_length > 1){
-      //     console.log(id_length, d.values[0].id )
-
-
-      // }
-      // else {
+     // console.log(d, d.id )
 
         if (d.id[0].length>1){
               d= d.id[0]
-              console.log("if", d)
+              // console.log("if", d)
+              var Id_links = d3.select("#div_Ids")
+                               .selectAll("text")
+                               .data(d)
+                               .enter()
+                               .append("text")
+                                          // .attr("href", show_div_ADR)
+                               .text(function(d,i){
+                                // console.log(d)
+                                return d + "\n"
+                                // return d.id
+                               })
+                               .on('click', plot_report_table);
+        }
+        else{
+          // console.log('else')
+
+              var Id_links = d3.select("#div_Ids")
+                               .append("text")
+                                          // .attr("href", show_div_ADR)
+                               .text(d.id)
+                               .on('click', plot_report_table);
+                    // }
+
+        }
+}
+
+function show_div_ADR(d,i){
+      // console.log(d)
+
+      d3.selectAll("#div_drug2 text").style("background-color","white")
+      d3.select(this).style("background-color","#e0ebeb")
+  // console.log("Hi")
+       d3.selectAll("#div_ADR text").remove();
+       d3.selectAll("#div_Ids text ").remove();
+       d3.selectAll("#div_report table").remove();
+
+      var ADR_links = d3.select("#div_ADR")
+                  .selectAll("text")
+                  .data(d.values)
+                  .enter()
+                  .append("text")
+                  .text(function(d, i) {
+                     return d.ADR;
+                  })
+                   .on ('click',show_div_Id);
+
+      ADR_links.insert("br",":first-child");
+
+
+
+       if (d.values.length > 1){
+              // console.log(d.values[0], d.values[0].id)
+             var id_length = d.values[0].id.length
+             // console.log(id_length)
+
+             if (id_length> 1)
+                d =  d.values[0].id; 
+              else
+                d= d.values[0]
+      }
+      else
+          d=d.values[0]                 
+
+        if (d.id[0].length>1){
+              d= d.id[0]
+              // console.log("if", d)
               var Id_links = d3.select("#div_Ids")
                                .selectAll("text")
                                .data(d)
@@ -203,63 +274,33 @@ function show_div_drug2(d,i){
                                 return d + "\n"
                                 // return d.id
                                })
-                               .on('click', showReport);
-
-
+                               .on('click', plot_report_table);
         }
         else{
-          console.log('else')
+          // console.log('else')
 
               var Id_links = d3.select("#div_Ids")
                                .append("text")
                                           // .attr("href", show_div_ADR)
                                .text(d.id)
-                               .on('click', showReport);
+                               .on('click', plot_report_table);
                     // }
 
         }
-}
 
 
-
-function show_div_ADR(d,i){
-    // console.log(d)
-
-      d3.selectAll("#div_drug2 text").style("background-color","white")
-      d3.select(this).style("background-color","#e0ebeb")
-  // console.log("Hi")
-       d3.selectAll("#div_ADR text").remove();
-       d3.selectAll("#div_Ids text ").remove();
-
-      var ADR_links = d3.select("#div_ADR")
-                  .selectAll("text")
-                  .data(d.values)
-                  .enter()
-                  .append("text")
-                  // .attr("href", function(d) {
-                  //   return d.drug2;
-                  // })
-                  .text(function(d, i) {
-                    //console.log(d)
-                    // if(i==0)
-                     return d.ADR;
-                  })
-                   .on ('click',show_div_Id);
-
-      ADR_links.insert("br",":first-child");
-
-      var Id_links = d3.select("#div_Ids")
-                        .selectAll("text")
-                        .data(d.values)
-                        .enter()
-                        .append("text")
-                        // .attr("href", show_div_ADR)
-                        .text(function(d, i) {
-                         // console.log(d.id[0])
-                            return d.id[0]//.split(",").join("\n");
-                        })
-                        .on('click', showReport);
-      Id_links.insert("br",":first-child");
+      // var Id_links = d3.select("#div_Ids")
+      //                   .selectAll("text")
+      //                   .data(d.values)
+      //                   .enter()
+      //                   .append("text")
+      //                   // .attr("href", show_div_ADR)
+      //                   .text(function(d, i) {
+      //                    // console.log(d.id[0])
+      //                       return d.id[0]//.split(",").join("\n");
+      //                   })
+      //                   .on('click', showReport);
+      // Id_links.insert("br",":first-child");
 
 }
 
@@ -269,32 +310,81 @@ function show_div_Id(d,i){
       d3.select(this).style("background-color","#e0ebeb")
       // console.log("Hi")
        d3.selectAll("#div_Ids text").remove();
+       d3.selectAll("#div_report table").remove();
 
        if(d.values){
-            var Id_links = d3.select("#div_Ids")
+
+            console.log("if", d.values)
+
+            if (d.values.length > 1){
+              // console.log(d.values[0], d.values[0].id)
+             var id_length = d.values[0].id.length
+             // console.log(id_length)
+
+             if (id_length> 1)
+                d =  d.values[0].id; 
+              else
+                d= d.values[0]
+            }
+            else
+                d=d.values[0]                 
+
+            if (d.id[0].length>1){
+                    d= d.id[0]
+                    // console.log("if", d)
+                    var Id_links = d3.select("#div_Ids")
+                                     .selectAll("text")
+                                     .data(d)
+                                     .enter()
+                                     .append("text")
+                                                // .attr("href", show_div_ADR)
+                                     .text(function(d,i){
+                                      console.log(d)
+                                      return d + "\n"
+                                      // return d.id
+                                     })
+                                     .on('click', plot_report_table);
+              }
+              else{
+                // console.log('else')
+
+                    var Id_links = d3.select("#div_Ids")
+                                     .append("text")
+                                                // .attr("href", show_div_ADR)
+                                     .text(d.id)
+                                     .on('click', plot_report_table);
+                          // }
+
+              }
+       }
+       else{
+          // console.log("else",d)
+
+          if (d.id[0].length>1){
+             d= d.id[0]
+             var Id_links = d3.select("#div_Ids")
                         .selectAll("text")
-                        .data(d.values)
+                        .data(d)
                         .enter()
                         .append("text")
                         .text(function(d, i) {
-                              return d.id//.split(",").join("\n")
+                              return d//.split(",").join("\n")
                         })
-                        .on('click', showReport);
+                        .on('click', plot_report_table);
 
             Id_links.insert("br",":first-child");
-
-       }
-       else{
-        // console.log(d)
+          }
+          else{
               var Id_links = d3.select("#div_Ids")
                           .append("text")
                           .text(d.id)//.split(",").join("\n"))
-                          .on('click', showReport);
+                          .on('click', plot_report_table);
 
               Id_links.insert("br",":first-child");
-       }
 
-       // console.log(d, d.id)
+          }
+              
+       }
 }
 
 
@@ -303,19 +393,14 @@ function showReport(){
       d3.selectAll("#div_Ids text").style("background-color","white")
       d3.select(this).style("background-color","#e0ebeb")
       // console.log("Hi")
-       d3.selectAll("#div_report text").remove();
+      d3.selectAll("#div_report table").remove();
 
       // console.log(data)
-
       var id = d3.select(this).text();
-
-      console.log(id, typeof(id))
-
+      // console.log(id, typeof(id))
       reports_data.forEach(function (d){
-        // type(d.key)
-
             if (id.toString().indexOf(d.key) !== -1){
-                  console.log(d, d.key);
+                  // console.log(d, d.key);
 
                   d3.select("#div_report")
                     .selectAll("text")
@@ -338,6 +423,66 @@ function showReport(){
                     })
             }
       })
+}
+
+
+function  plot_report_table(){
+
+      d3.selectAll("#div_Ids text").style("background-color","white")
+      d3.select(this).style("background-color","#e0ebeb")
+      // console.log("Hi")
+       d3.selectAll("#div_report *").remove();
+    
+
+        
+      var id = d3.select(this).text();
+      console.log(id, typeof(id))
+      reports_data.forEach(function (d){
+            if (id.toString().indexOf(d.key) !== -1){
+                  d= d.values[0]
+
+                  data = Object.keys(d).map(function(k) { return {key:k, value:d[k]} })
+
+                  // console.log(d)
+
+                  var table = d3.select("#div_report").append("table")
+                            .attr("style", "margin: 20px; border: 2px"),
+
+                        thead = table.append("thead"),
+                        tbody = table.append("tbody");
+
+                    // append the header row
+                    // thead.append("tr")
+                    //     .selectAll("th")
+                    //     .data(["Field", "Value"])
+                    //     .enter()
+                    //     .append("th")
+                    //         .text(function(d) { console.log(d);return d; });
+
+
+                    // create a row for each object in the data
+                    var rows = tbody.selectAll("tr")
+                        .data(data)
+                        .enter()
+                        .append("tr");
+                        ///add the key in first td
+                        rows.append("td")
+                      .text(function(d) { ;return d.key; });
+
+                    rows.append("td")
+                              .append("text")
+                              .text(function(d) { return d.value; });  
+            }
+
+            // else {
+            //       d3.select("#div_report")
+            //         .append("text")
+            //         .text("Report not found")
+
+
+            // }
+      })
+       
 }
 
 
