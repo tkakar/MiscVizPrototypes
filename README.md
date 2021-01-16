@@ -1,3 +1,3 @@
 # Visualization Interface Development
 
-The goal of this project is to create an analytical visual interface for analysts to explore the data.
+This repo represents a set of visualization implementations using D3.js including glyphs, bar-charts, scatter plots, small multiples, etc., for prototyping purposes.
