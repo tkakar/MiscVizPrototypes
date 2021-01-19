@@ -1,106 +1,70 @@
 <!DOCTYPE html>
 <html>
 
-    <head>
-      <title>Project</title>
-        <meta charset="utf-8">
-        <link rel="stylesheet" type="text/css" href="styles/style.css"/>
-        <script type="text/javascript" src="lib/d3.min.js"></script>
-        <script type="text/javascript" src="lib/math.js"></script>
-        <style>
-          .left{
-            float:left; 
-            width:125px;
-            margin-top: 10px;
-             /*border-right: 1px solid #d5dae2 ;*/
-            /*border: 1px solid black;*/
-            /*padding-left: 10px;*/
+  <head>
+    <title>Project</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="styles/style.css"/>
+    <script type="text/javascript" src="lib/d3.min.js"></script>
+    <script type="text/javascript" src="lib/math.js"></script>
+    <style>
+        .left{
+          float:left; 
+          width:125px;
+          margin-top: 10px;
+          overflow-y: auto;
+          height: 820px;
+        }
 
-            overflow-y: auto;
-            height: 820px;
+        .style_div{
+          border-right: 1px solid #d5dae2 ;
+        }
 
-          }
-          .style_div{
-            border-right: 1px solid #d5dae2 ;
-          }
-
-          text{
-              /*color: blue;*/
-
-          }
-          #div_Ids{
-            /*float:left; */
-            /*width:100px;*/
-             /*border: 1px solid black;*/
-          }
-          h3{
-            color: blue;
-            /*text-align:  center;*/
+        h3{
+          color: blue;
+          /*text-align:  center;*/
+        }
+        
+        svg {
+          display: block;
+          margin: auto;
           }
 
-          svg {
-                display: block;
-                margin: auto;
-           }
+        .node {
+          cursor: pointer;
+        }
 
-         .node {
-            cursor: pointer;
-          }
+        .node circle {
+          fill: #fff;
+          stroke: steelblue;
+          stroke-width: 3px;
+        }
 
-          .node circle {
-            fill: #fff;
-            stroke: steelblue;
-            stroke-width: 3px;
-          }
+        .node text {
+          font: 12px sans-serif;
+        }
 
-          .node text {
-            font: 12px sans-serif;
-          }
+        .link {
+          fill: none;
+          stroke: #ccc;
+          stroke-width: 2px;
+        }
+    </style>
+  </head>
 
-          .link {
-            fill: none;
-            stroke: #ccc;
-            stroke-width: 2px;
-          }
-
-/*          input[type="radio"] {
-            display: none;
-          }*/
-        </style>
-    </head>
-
-    <body> 
-      <div id="div_drug1" class="left"> 
-       <!--  <h3>  Drug1 </h3> -->
-      </div>
-      <div id="div_drug2"  class="left">
-        <!-- <h3>  Drug2 </h3> -->
-       </div>
-      <div id="div_ADR"  class="left"> 
-        <!-- <h3>  ADRs </h3> -->
-      </div>
-      <div id="div_Ids"  class="left" style ="text-align:center"> 
-        <!-- <h3>  Report-IDs </h3> -->
-      </div>
+  <body> 
+      <div id="div_drug1" class="left"> </div>
+      <div id="div_drug2"  class="left"></div>
+      <div id="div_ADR"  class="left"> </div>
+      <div id="div_Ids"  class="left" style ="text-align:center"> </div>
       <div id="div"  class="left"  style="width:850px;"> 
          <input type="radio" name="radial" value="radial"><label> Radial</label> <br>
          <input type="radio" name="nl" value="nl" > Node-Link<br>
-        <!-- <h3>  Report </h3> -->
-        <div id="div_report"> </div>
-
-<!--         <table id="split">
-                      <thead></thead>
-                      <tbody></tbody>
-        </table> -->
+         <div id="div_report"> </div>
       </div>
+  </body>
 
-
-
-      <script type="text/javascript" src="scripts/list.js"> </script>
-
-
-       
-    </body>
+  <script type="text/javascript" src="scripts/list.js"> </script>
 </html>
 
 

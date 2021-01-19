@@ -42,10 +42,7 @@ var main_obj= {};
 
 
 function buildVis(data) {
- // console.log(data[0], data[1])
-
-   
-         var  WIDTH = 1000,
+          var  WIDTH = 1000,
           HEIGHT = 500,
           MARGINS = {
             top: 20,
@@ -74,13 +71,13 @@ function buildVis(data) {
             .orient('left')
             .tickSubdivide(true);
 
-         var vis =  d3.select("#drug_svg")
+          var vis =  d3.select("#drug_svg")
                     .append("svg")
                     .attr("width",WIDTH)
                     .attr("height", HEIGHT)
 
 
-            vis.selectAll("g")  
+          vis.selectAll("g")  
               .data(data)                   
               .enter().append("circle")               
               .attr("r", 5)   
@@ -95,15 +92,15 @@ function buildVis(data) {
                return xRange(d.id); })     
               .attr("cy", function(d) { return yRange(d.score); });
 
-      // Adding xAxis
-      vis.append('svg:g')
-        .attr('class', 'x axis')
-        .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
-        .call(xAxis);
+          // Adding xAxis
+          vis.append('svg:g')
+            .attr('class', 'x axis')
+            .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+            .call(xAxis);
 
-      // Adding yAxis
-      vis.append('svg:g')
-        .attr('class', 'y axis')
-        .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
-        .call(yAxis);
-      }
+          // Adding yAxis
+          vis.append('svg:g')
+            .attr('class', 'y axis')
+            .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+            .call(yAxis);
+}

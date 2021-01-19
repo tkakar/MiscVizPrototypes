@@ -3,197 +3,172 @@
 
 <head>
       <title>Project</title>
-        <meta charset="utf-8">
-        <!-- <link rel="stylesheet" type="text/css" href="styles/style.css"/> -->
+      <meta charset="utf-8">
       <script type="text/javascript" src="lib/d3.min.js"></script>
       <script type="text/javascript" src="lib/crossfilter/crossfilter.js"></script>
       <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-      <!-- <link rel="stylesheet" type="text/css" href="styles/style.css"/> -->
-      <!-- // <script type="text/javascript" src="scripts/math.js"></script> -->
+      
       <style>
-/*@import url(http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,700);*/
+          ul.menu {
+              list-style-type: none;
+              margin: 0;
+              padding: 0;
+              overflow: hidden;
+              background-color: #333;
+          }
 
-/*body {
-  font-family: "Helvetica Neue";
-  margin-left: 40px auto;
-  margin-top: 40px auto;
-  width: 960px;
-  min-height: 2000px;
-}
+          li {
+              float: left;
+          }
 
-#body {
-  position: relative;
-}*/
+          li a {
+              display: block;
+              color: white;
+              text-align: center;
+              padding: 14px 16px;
+              text-decoration: none;
+          }
 
-ul.menu {
-/*    display: block;
-    margin: 0 auto;*/
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
-}
+          li a:hover {
+              background-color: #111;
+          }
+          footer {
+            padding: 2em 0 1em 0;
+            font-size: 12px;
+          }
 
-li {
-    float: left;
-}
+          h1 {
+            font-size: 96px;
+            margin-top: .3em;
+            margin-bottom: 0;
+          }
 
-li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-}
+          h1 + h2 {
+            margin-top: 0;
+          }
 
-li a:hover {
-    background-color: #111;
-}
-footer {
-  padding: 2em 0 1em 0;
-  font-size: 12px;
-}
+          h2 {
+            font-weight: 400;
+            font-size: 28px;
+          }
 
-h1 {
-  font-size: 96px;
-  margin-top: .3em;
-  margin-bottom: 0;
-}
+          h1, h2 {
+            font-family: "Yanone Kaffeesatz";
+            text-rendering: optimizeLegibility;
+          }
 
-h1 + h2 {
-  margin-top: 0;
-}
+          #charts {
+            padding: 10px 0;
+          }
 
-h2 {
-  font-weight: 400;
-  font-size: 28px;
-}
+          .chart {
+            display: inline-block;
+            height: 151px;
+            margin-bottom: 20px;
+          }
 
-h1, h2 {
-  font-family: "Yanone Kaffeesatz";
-  text-rendering: optimizeLegibility;
-}
+          .reset {
+            padding-left: 1em;
+            font-size: smaller;
+            color: #ccc;
+          }
 
-/*#body > p {
-  line-height: 1.5em;
-  width: 1200px;
-  text-rendering: optimizeLegibility;
-}*/
+          .background.bar {
+            fill: #ccc;
+          }
 
-#charts {
-  padding: 10px 0;
-}
+          .foreground.bar {
+            fill: steelblue;
+          }
 
-.chart {
-  display: inline-block;
-  height: 151px;
-  margin-bottom: 20px;
-}
+          .axis path, .axis line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+          }
 
-.reset {
-  padding-left: 1em;
-  font-size: smaller;
-  color: #ccc;
-}
+          .axis text {
+            font: 10px sans-serif;
+          }
 
-.background.bar {
-  fill: #ccc;
-}
+          .brush rect.extent {
+            fill: steelblue;
+            fill-opacity: .125;
+          }
 
-.foreground.bar {
-  fill: steelblue;
-}
+          .brush .resize path {
+            fill: #eee;
+            stroke: #666;
+          }
 
-.axis path, .axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
+          #hour-chart {
+            width: 260px;
+          }
 
-.axis text {
-  font: 10px sans-serif;
-}
+          #support-chart {
+            width: 300px;
+          }
 
-.brush rect.extent {
-  fill: steelblue;
-  fill-opacity: .125;
-}
+          #confidence-chart {
+            width: 420px;
+          }
 
-.brush .resize path {
-  fill: #eee;
-  stroke: #666;
-}
+          #date-chart {
+            width: 920px;
+          }
 
-#hour-chart {
-  width: 260px;
-}
+          #flight-list {
+            min-height: 1024px;
+          }
 
-#support-chart {
-  width: 300px;
-}
+          #flight-list .date,
+          #flight-list .day {
+            margin-bottom: .4em;
+          }
 
-#confidence-chart {
-  width: 420px;
-}
+          #flight-list .flight {
+            line-height: 1.5em;
+            background: #eee;
+            width: 1000px;
+            margin-bottom: 1px;
+          }
 
-#date-chart {
-  width: 920px;
-}
+          #flight-list .time {
+            color: #999;
+          }
 
-#flight-list {
-  min-height: 1024px;
-}
+          #flight-list .flight div {
+            display: inline-block;
+            width: 100px;
+          }
 
-#flight-list .date,
-#flight-list .day {
-  margin-bottom: .4em;
-}
-
-#flight-list .flight {
-  line-height: 1.5em;
-  background: #eee;
-  width: 1000px;
-  margin-bottom: 1px;
-}
-
-#flight-list .time {
-  color: #999;
-}
-
-#flight-list .flight div {
-  display: inline-block;
-  width: 100px;
-}
-
-#flight-list div.confidence,
-#flight-list div.support {
-  width: 50px;
-  padding-right: 10px;
-  text-align: right;
-}
+          #flight-list div.confidence,
+          #flight-list div.support {
+            width: 50px;
+            padding-right: 10px;
+            text-align: right;
+          }
 
 
-#flight-list div.ADR,
-#flight-list div.Drugs {
-  width: 400px;
-  padding-left: 10px;
-  text-align: left;
-}
+          #flight-list div.ADR,
+          #flight-list div.Drugs {
+            width: 400px;
+            padding-left: 10px;
+            text-align: left;
+          }
 
-#flight-list .early {
-  color: green;
-}
+          #flight-list .early {
+            color: green;
+          }
 
-aside {
-  /*position: absolute;*/
-  left: 740px;
-  font-size: smaller;
-  width: 220px;
-  color:blue;
-  margin-bottom: 10px;
-  margin-left: 700px;
-}
+          aside {
+            left: 740px;
+            font-size: smaller;
+            width: 220px;
+            color:blue;
+            margin-bottom: 10px;
+            margin-left: 700px;
+          }
 
       </style>
     </head>
@@ -207,28 +182,26 @@ aside {
                   <li><a href="../viz/scatter.html">Overview</a></li>
                   <li><a href="../viz/crossfilter.html">CrossFilter</a></li>
                   <li><a href="../viz/order_matrix.html">Re-Ordered Matrix</a></li>
-              </ul>     
+        </ul>     
 </div>
 <font size="+3">Drug Drug Interaction For Selected Support and Confidence </font><br/>
 
   
 <div id="charts">
-
   <div id="support-chart" class="chart">
     <div class="title"> Support</div>
   </div>
   <div id="confidence-chart" class="chart">
     <div class="title">Confidence </div>
   </div>
-
 </div>
 
 <aside id="totals"><span id="active">-</span> of <span id="total">-</span> DDI selected.</aside>
 
 <div id="lists">
   <div id="flight-list" class="list"></div>
-
 </div>
+
 <footer>
   <span style="float:right;">
     Released under the <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache License 2.0</a>.

@@ -1,63 +1,48 @@
 <!DOCTYPE html>
 <html>
-
     <head>
     	<title>Project</title>
         <meta charset="utf-8">
         <link rel="stylesheet" type="text/css" href="styles/style.css"/>
     	<script type="text/javascript" src="lib/d3.min.js"></script>
-      <script type="text/javascript" src="lib/math.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
+         <script type="text/javascript" src="lib/math.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
     </head>
 
     <body> 
 
-    <div id="main_container"> 
-       <ul class= "menu">
-                  <li><a href="../viz/barchart.html">Barcharts</a></li>
-                  <li><a href="../viz/glyph1.html">Glyph1</a></li>
-                  <li><a href="../viz/glyph2.html">Glyph2</a></li>
-                  <li><a href="../viz/scatter.html">Overview</a></li>
-                  <li><a href="../viz/crossfilter.html">CrossFilter</a></li>
-                  <li><a href="../viz/order_matrix.html">Re-Ordered Matrix</a></li>
-        </ul>     
-   
+        <div id="main_container"> 
+            <ul class= "menu">
+                    <li><a href="../viz/barchart.html">Barcharts</a></li>
+                    <li><a href="../viz/glyph1.html">Glyph1</a></li>
+                    <li><a href="../viz/glyph2.html">Glyph2</a></li>
+                    <li><a href="../viz/scatter.html">Overview</a></li>
+                    <li><a href="../viz/crossfilter.html">CrossFilter</a></li>
+                    <li><a href="../viz/order_matrix.html">Re-Ordered Matrix</a></li>
+            </ul>     
+    
 
-        <div id="side_bar" class = "div_outline" >  
-
-<!--                 <button id ="two-drugs"  class = "buttons" type="button">Two Drugs</button>
-                <button id ="three-drugs" class = "buttons" type="button">Three Drugs</button>
-                <button id ="four-drugs" class = "buttons" type="button">Four Drugs</button> -->
-
+            <div id="side_bar" class = "div_outline" >  
                 <div id = "search_div">
-                     Search: <input id="search_txbox" type="text" name="Search" value="Search"  onfocus="if (this.value == 'Search') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search';}" ><br>
-                 </div>
+                    Search: <input id="search_txbox" type="text" name="Search" value="Search"  onfocus="if (this.value == 'Search') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search';}" ><br>
+                </div>
 
-                 <div id = "drugs_div">
-                 </div>
+                <div id = "drugs_div"></div>
+            </div>
+            
+            <div id ="middle_container" style="margin-left:200px">
+                <div id="drug_classes"></div> 
+                <div id="drugs"></div> 
+                <div id="matrix_plot"></div>
+                <div id="detail_table" style="margin-top:20px" >
+                    <table id="split">
+                        <thead></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-          
-        <div id ="middle_container" style="margin-left:200px">
-              <div id="drug_classes"></div> 
-              <div id="drugs"></div> 
-              <div id="matrix_plot"></div>
-              <div id="detail_table" style="margin-top:20px" >
-                   <table id="split">
-                      <thead></thead>
-                      <tbody></tbody>
-                   </table>
-              </div>
-        </div>
-    </div>
- </body>
+    </body>
        
-<!--         <div id="detail_div"> 
-                  <svg id="detail_Drug" style="width:1650px;height:30px;border:1px lightgray solid;" > </svg>
-                  <svg id="detail_ADR" style="width:1650px;height:30px;border:1px lightgray solid;" > </svg>
-                  <svg id="detail_Score" style=" width:1650px;height:30px;border:1px lightgray solid;" > </svg>
-        </div> -->
-
     <script type="text/javascript" src = "scripts/cf_drugs_class.js"> </script>
-      
-   
 </html>

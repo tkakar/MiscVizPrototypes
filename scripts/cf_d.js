@@ -1,3 +1,4 @@
+// ********** Code for crossfilters for barcharts
 d3.csv("data/cf_data.csv", function(error, flights) {
      
   // A nest operator, for grouping the flight list.
@@ -23,7 +24,6 @@ d3.csv("data/cf_data.csv", function(error, flights) {
       confidences = confidence.group(function(d) { return (+d3.round(d ,3) /10 ) *10; });
 
   var charts = [
-
     barChart()
         .dimension(support)
         .group(supports)
@@ -90,14 +90,13 @@ d3.csv("data/cf_data.csv", function(error, flights) {
 
   function flightList(div) {
     var flightsByDate = nestByDate.entries(date.top(40));
-
     div.each(function() {
       var date = d3.select(this).selectAll(".date")
-          .data(flightsByDate, function(d) { return d.key; });
+                   .data(flightsByDate, function(d) { return d.key; });
 
       date.enter().append("div")
           .attr("class", "date")
-        .append("div")
+          .append("div")
           
       date.exit().remove();
 
@@ -105,37 +104,35 @@ d3.csv("data/cf_data.csv", function(error, flights) {
           .data(function(d) { return d.values; }, function(d) { return d.index; });
 
       var flightEnter = flight.enter().append("div")
-          .attr("class", "flight");
+                                      .attr("class", "flight");
 
       flightEnter.append("div")
-          .attr("class", "Drugs")
-          .attr("width", 500)
-          .text(function(d) { return d.Drugs; });
+                 .attr("class", "Drugs")
+                 .attr("width", 500)
+                 .text(function(d) { return d.Drugs; });
 
       flightEnter.append("div")
-          .attr("class", "ADR")
-          .attr("width", 500)
-          .text(function(d) { return d.ADR; });
+                 .attr("class", "ADR")
+                 .attr("width", 500)
+                 .text(function(d) { return d.ADR; });
 
       
       flightEnter.append("div")
-          .attr("class", "confidence")
-          .text(function(d) { return d.confidence });
+                 .attr("class", "confidence")
+                 .text(function(d) { return d.confidence });
 
       flightEnter.append("div")
-          .attr("class", "support")
+                 .attr("class", "support")
           // .classed("early", function(d) { return d.support < 0; })
-          .text(function(d) { return d.support });
+                 .text(function(d) { return d.support });
 
       flight.exit().remove();
-
       flight.order();
     });
   }
 
   function barChart() {
     if (!barChart.id) barChart.id = 0;
-
     var margin = {top: 10, right: 10, bottom: 20, left: 10},
         x,
         y = d3.scale.linear().range([100, 0]),
@@ -195,7 +192,7 @@ d3.csv("data/cf_data.csv", function(error, flights) {
           var gBrush = g.append("g").attr("class", "brush").call(brush);
           gBrush.selectAll("rect").attr("height", height);
           gBrush.selectAll(".resize").append("path").attr("d", resizePath);
-        }
+        }//end if
 
         // Only redraw the brush if set externally.
         if (brushDirty) {
@@ -212,11 +209,12 @@ d3.csv("data/cf_data.csv", function(error, flights) {
                 .attr("x", x(extent[0]))
                 .attr("width", x(extent[1]) - x(extent[0]));
           }
-        }
+        }//end if
 
         g.selectAll(".bar").attr("d", barPath);
-      });
+      });//end each
 
+      // Draw path
       function barPath(groups) {
         var path = [],
             i = -1,
@@ -229,6 +227,7 @@ d3.csv("data/cf_data.csv", function(error, flights) {
         return path.join("");
       }
 
+      // To resize
       function resizePath(d) {
         var e = +(d == "e"),
             x = e ? 1 : -1,
@@ -243,7 +242,7 @@ d3.csv("data/cf_data.csv", function(error, flights) {
             + "M" + (4.5 * x) + "," + (y + 8)
             + "V" + (2 * y - 8);
       }
-    }
+    }// end function chart
 
     brush.on("brushstart.chart", function() {
       var div = d3.select(this.parentNode.parentNode.parentNode);

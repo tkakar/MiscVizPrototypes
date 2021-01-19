@@ -175,11 +175,10 @@ function plot(data,id, ADR, No_of_drugs){
             div.style("display", "none");
         });
 
-       var arc = d3.svg.arc()
+       var arc =   d3.svg.arc()
                      .outerRadius(function(d,i){
                       // console.log(id, No_of_rules, No_of_drugs ,main_radius, d.Conf,d.Conf+main_radius );
                         if (i==0){
-
                              main_radius= d.Conf/2
                              // console.log(main_radius)
                              return 0
@@ -206,13 +205,13 @@ function plot(data,id, ADR, No_of_drugs){
                         // console.log((i-1) * angle*pi)
                         return (i-1) *angle* (pi)
                       }
-                    })
-                    .endAngle(function (d,i ){
+                     })
+                     .endAngle(function (d,i ){
                       if (i!=0){
                         // console.log("hi",(i) * (Math.PI))
                         return (i)* angle * (pi)
                       }
-                    })
+                     })
 
        var paths =  MainCirlce.append("path")
         .attr("d", arc)
@@ -268,13 +267,11 @@ function find_Max_Conf(data){
 }
 
 function find_Main_Conf(data){
-
-          // return data[0].Conf
+          return data[0].Conf
 }
 
 
 function drugs_split(str){
-
         /* To remove the square brackets from the drug names */
             str = str.replace(/[\[\]']+/g,'')
             str=  str.split(" ");

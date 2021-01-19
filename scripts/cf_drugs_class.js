@@ -1,3 +1,4 @@
+//  Include drug classes to filter
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
 
 width = 1200 - margin.left - margin.right,
@@ -21,28 +22,12 @@ var c_data, i_data;
 function initialize(){
   c_data = read_intr_data()
   i_data = read_class_data()
-  // ready()
-  // ready(c_data, i_data)
 }
 
-var ready = function(){
-
-console.log(default_class)
-
-  // console.log(c.size,i)
-   
-  //  // for (x =0; x< 10; x++){
-  //  //  console.log(c[x])
-  //  // }
-
-  //   // plot_drugs_barchart (default_class)
-  //   // plot()
-
-};
 
 function read_intr_data(){
-  var i_data;
- d3.text("data/data.csv", function(unparsedData){
+    var i_data;
+    d3.text("data/data.csv", function(unparsedData){
          var data = d3.csv.parseRows(unparsedData);
          for (var row=0; row<data.length;row++){
               var id = data[row][0]
@@ -51,18 +36,13 @@ function read_intr_data(){
               var ADR = data [row][3]
               var No_of_items = (Math.pow(2,No_of_drugs) - 1) * 3 + 4
               var drugs_comb = data[row][4]
-              
-              // console.log(drugs_list)
-              if (No_of_drugs == 2){
-                   
+
+              if (No_of_drugs == 2){        
                   var x = drugs_split(drugs_comb)
-                  // console.log(x)
                    obj['weight'] = +score;
                    obj['ADR'] = ADR;
                    obj['drug1'] = x[0];
                    obj['drug2'] =x[1];
-
-                   // if (obj != {})
                      overall.push(obj)
               }
                   obj ={}
@@ -70,42 +50,26 @@ function read_intr_data(){
             drugs_list_no_duplicates = remove_duplicates(drugs_list)
             set_data (overall);
             i_data= overall;
-      });
+    });
     return overall;
 }
 /* Reading Drug Class Data*/
-
 function set_data(data){
   // console.log(data).
       intr_data =  data;
-
 }
-
-
-// function set_class(data){
-//   // console.log(data).
-//       classed_data =  data;
-//       // default_class = classes[0]
-
-
-// }
 
 function read_class_data(){
   var c_data;
   d3.text("data/drug_classes.csv", function(unparsedData){
          var data = d3.csv.parseRows(unparsedData);
-          // drugs_with_classes['name']= new Array();
-
-           // console.log(typeof(drugs_with_classes['name']))
          for (var row=1; row<data.length;row++){
               var drug_class = data[row][3].toLowerCase()
               var gen_name = data[row][2].toLowerCase()
               var brand_name = data[row][1].toLowerCase()
               var split_array=[]
-
               if (drugs_list_no_duplicates.indexOf(gen_name) != -1 ){
                    split_class =  split_classes (drug_class)
-                    
                     for (i =0; i< split_class.length;i++) {
                       // console.log(split_class, split_class[i], i, row)
                         if (overall_classes.length<1){
@@ -115,23 +79,16 @@ function read_class_data(){
                         }
                        
                         else{
-
-                                // console.log( split_class[i], row)
-                                for (x in overall_classes){
-                                      if (overall_classes[x].class == split_class[i]){
-                                        // console.log( "split_class")
-                                        
-                                        if ((overall_classes[x].name.indexOf(gen_name) === -1)) {
-                                          overall_classes[x].freq= overall_classes[x].freq + 1
-                                          overall_classes[x]['name'].push (gen_name);
-                                        }
-                                            
-                                       check = 1
-                                       break;
-                                      }
-                                }
-
-                                  
+                              for (x in overall_classes){
+                                    if (overall_classes[x].class == split_class[i]){                                      
+                                      if ((overall_classes[x].name.indexOf(gen_name) === -1)) {
+                                        overall_classes[x].freq= overall_classes[x].freq + 1
+                                        overall_classes[x]['name'].push (gen_name);
+                                      }  
+                                      check = 1
+                                      break;
+                                    }
+                              }  
                                if (check !=1){
                                   // console.log( split_class[i], row)
                                   drugs_with_classes['class'] = split_class[i]
@@ -140,41 +97,26 @@ function read_class_data(){
                                   drugs_with_classes['freq'] = 1;
                               }
 
+                        }//end else
+                        if(drugs_with_classes.class!=""){
+                              overall_classes.push(drugs_with_classes)
+                              drugs_with_classes={'name': [], 'class':"",'freq':0};
                         }
-                         if(drugs_with_classes.class!=""){
-                         overall_classes.push(drugs_with_classes)
-                         drugs_with_classes={'name': [], 'class':"",'freq':0};}
-                          // else
-                          //   console.log(split_class)
-                          check = 0
-                    }
-            }
-            // if (row==115 ){
-            //   break;
-            // }
-      }
-            // console.log(overall_classes.length)
-             /*Some classes had same list of drugs so to remove those duplicate classes*/ 
-
-            overall_classes= remove_dup_object (overall_classes, "name")
-                        // console.log(overall_classes.length)  
-            plot_classes(overall_classes) 
-            plot_drugs_barchart (overall_classes[10])
-            // set_class(overall_classes[10].name)
-            createAdjacencyMatrix (drugs_list_no_duplicates, intr_data ,overall_classes[10].name )
-            plot_interactions_table(overall_classes[10].name)
-            // c_data = overall_classes
-            // default_class = overall_classes[10]
+                        check = 0
+                    }//end for
+              }
+          }//end for
+          overall_classes= remove_dup_object (overall_classes, "name")
+          plot_classes(overall_classes) 
+          plot_drugs_barchart (overall_classes[10])
+          createAdjacencyMatrix (drugs_list_no_duplicates, intr_data ,overall_classes[10].name )
+          plot_interactions_table(overall_classes[10].name)
   });
-
-// console.log(default_class)
-return overall_classes;
+  // console.log(default_class)
+  return overall_classes;
 }
 
 function plot_classes(data){
-  
-  // console.log(data)
-
           var x = d3.scale.ordinal().rangeRoundBands([0,width-margin.left-margin.right],0.1);
           var y =  d3.scale.linear().range([height-margin.bottom-margin.top, 0]);
 
@@ -188,17 +130,12 @@ function plot_classes(data){
          var xAxis = d3.svg.axis()
                     .scale(x)
                     .orient("bottom")
-                    // .ticks(No_of_rules+1)
                     .tickValues([]);
 
          var yAxis = d3.svg.axis()
                     .scale(y)
                     .orient("left")
                     .ticks(5)
-                    // .tickFormat(d3.format(".2s"))
-                    // .innerTickSize(-width+margin.left+margin.right)
-                    // .outerTickSize(0);
-
 
           var svg = d3.select("#drug_classes")
                       .append("svg")
@@ -274,33 +211,26 @@ function plot_classes(data){
                        plot_interactions_table(d.name[0])
 
     });
-                  
-                  // console.log(default_class)
 }
 
 
 function plot_drugs_barchart(data){
-  // console.log(data)
-      d3.selectAll("#drugs svg").remove();
+          // console.log(data)
+          d3.selectAll("#drugs svg").remove();
           var width = 500,
           height = 300;
-
-          // console.log(data);
           var x = d3.scale.ordinal().rangeRoundBands([0,width-margin.left-margin.right],0.1);
           var y =  d3.scale.linear().range([height-margin.bottom-margin.top, 0]);
-
-
-          // x.domain(data.map(function(d,i) { console.log(d, i);return d[name]; }));
           x.domain(data.name.map(function(d,i) {  return d; }));
      
-         y.domain([0,30])
+          y.domain([0,30])
 
-         var xAxis = d3.svg.axis()
+          var xAxis = d3.svg.axis()
                     .scale(x)
                     .orient("bottom")
 
 
-         var yAxis = d3.svg.axis()
+          var yAxis = d3.svg.axis()
                     .scale(y)
                     .orient("left")
                     .ticks(5)
@@ -357,77 +287,60 @@ function plot_drugs_barchart(data){
                     div.style("top", d3.event.pageY-25+"px");
                     div.style("display", "inline-block");
                     div.html(d);
-                })
+              })
 
-                .on("mouseout", function(d){
-                    div.style("display", "none");
-                });   
+              .on("mouseout", function(d){
+                  div.style("display", "none");
+              });   
 
-        d3.selectAll("#drugs rect").on("click", function(d, i){
-        d3.select(this).style("fill", '#1c9099');
-        plot_interactions_table(d);
-        // plot()
-       
-      });
-
-
+              d3.selectAll("#drugs rect").on("click", function(d, i){
+                  d3.select(this).style("fill", '#1c9099');
+                  plot_interactions_table(d);
+              });
 }
 
+// Plot table with data for interactions
 function  plot_interactions_table(data){
-
-  // if (typeof(data == "object")){
-
-
-  // }
-  // console.log(data, typeof(data))
-  d3.selectAll("#detail_table tr").remove();
-
+    d3.selectAll("#detail_table tr").remove();
     var filtered_data = []
     var i_len = intr_data.length
 
     for (i = 0, j=0; i< i_len; i++){
-      // console.log(i, intr_data[i], data)
           if (intr_data[i].drug1.toLowerCase() == data || intr_data[i].drug2.toLowerCase() == data){
-            // console.log(i, "hi", intr_data[i].drug1,intr_data[i].drug2 )
-                // if (filtered_data.drug1.indexOf(data) === -1 || filtered_data.drug2.indexOf(data) === -1 )
-                    filtered_data.push(intr_data[i])
+                  // console.log(i, "hi", intr_data[i].drug1,intr_data[i].drug2 )
+                  // if (filtered_data.drug1.indexOf(data) === -1 || filtered_data.drug2.indexOf(data) === -1 )
+                  filtered_data.push(intr_data[i])
           }
     }
-
-       // console.log(intr_data[0] )
-
-       // filtered_data = remove_dup_object(filtered_data, "id")
-        var thead = d3.select("thead").selectAll("th")
-                      .data(d3.keys(filtered_data[0]))
-                      .enter().append("th").text(function(d){return d});
-        // fill the table
-        // create rows
-        var tr = d3.select("tbody").selectAll("tr")
-                   .data(filtered_data).enter().append("tr")
-        // cells
-        var td = tr.selectAll("td")
-                  .data(function(d){    return d3.values(d)})
-                  .enter().append("td")
-                  .text(function(d) {return d})
-                  // .style ("fill", "#808284")
+    var thead = d3.select("thead").selectAll("th")
+                  .data(d3.keys(filtered_data[0]))
+                  .enter().append("th").text(function(d){return d});
+    // fill the table
+    // create rows
+    var tr = d3.select("tbody").selectAll("tr")
+               .data(filtered_data).enter().append("tr")
+    // cells
+    var td = tr.selectAll("td")
+               .data(function(d){    return d3.values(d)})
+               .enter().append("td")
+               .text(function(d) {return d})
 }
 
 function createAdjacencyMatrix(nodes_data,edges, classes) {
-  classed_data = classes
-      // console.log(edges, nodes_data)
+        classed_data = classes
+        // console.log(edges, nodes_data)
          var class_drug_list=[],
          intr_drug_list=[]
          var drug_list_to_object ={}
          var class_nodes;
          // console.log(nodes_data[258])
          for (var i = 0; i<nodes_data.length; i++){
-                       // console.log(classed_data.indexOf(nodes_data[i]))
-                    if (classed_data.indexOf(nodes_data[i]) != -1){
-                    drug_list_to_object['id'] =nodes_data[i]
-                    class_drug_list.push(drug_list_to_object)
-                    drug_list_to_object={}
-                    }
-
+            // console.log(classed_data.indexOf(nodes_data[i]))
+            if (classed_data.indexOf(nodes_data[i]) != -1){
+                drug_list_to_object['id'] =nodes_data[i]
+                class_drug_list.push(drug_list_to_object)
+                drug_list_to_object={}
+            }
          }
 
          class_nodes = class_drug_list
@@ -437,63 +350,47 @@ function createAdjacencyMatrix(nodes_data,edges, classes) {
           var edges_len = edges.length
           // console.log(edges_len, edges, edges[1798])
           for (x in edges) {
-            // console.log(edges[x])
-            // console.log(classed_data, edges[x].drug1, edges[x].drug2)
               if(classed_data.indexOf(edges[x].drug1) != -1 ){
-
-                // console.log(edges[x].drug1, edges[x].drug2)
                   var id = edges[x].drug1 + "-" + edges[x].drug2;
                   edgeHash[id] = edges[x];
-
                   drug_list_to_object['id'] =edges[x].drug2
-                        intr_drug_list.push(drug_list_to_object)
-                        drug_list_to_object={}
-                  // console.log(intr_drug_list)
+                  intr_drug_list.push(drug_list_to_object)
+                  drug_list_to_object={}
                }
                else if(classed_data.indexOf(edges[x].drug2) != -1){
-                // console.log(edges[x])
-
-                var id = edges[x].drug2 + "-" + edges[x].drug1;
+                  var id = edges[x].drug2 + "-" + edges[x].drug1;
                   edgeHash[id] = edges[x];
 
                   drug_list_to_object['id'] =edges[x].drug1
-                        intr_drug_list.push(drug_list_to_object)
-                        drug_list_to_object={}
-
+                  intr_drug_list.push(drug_list_to_object)
+                  drug_list_to_object={}
                }
           }
           nodes = remove_dup_object (intr_drug_list, "id")
-          // nodes = intr_drug_list
-          // console.log(  edgeHash)
-           matrix = [];
+          matrix = [];
           //create all possible edges
           for (a in class_nodes) {
             for (b in nodes) {
-              // if(classed_data.indexOf(nodes[a].id) != -1){
-              var grid = {id: class_nodes[a].id + "-" + nodes[b].id, x: b, y: a, weight: 'abc', ADR:''};
-              // console.log(edgeHash, grid.id)
+                  var grid = {id: class_nodes[a].id + "-" + nodes[b].id, x: b, y: a, weight: 'abc', ADR:''};
+                  // console.log(edgeHash, grid.id)
                   if (edgeHash[grid.id]) {
                     grid.weight = edgeHash[grid.id].weight;
                     // console.log(grid.weight)
                     grid.ADR = edgeHash[grid.id].ADR
                      
                   }
-              matrix.push(grid);
-
-            // }
-              
+                  matrix.push(grid);
             }
           }
           // console.log(matrix)
           plot(matrix, class_nodes,nodes)
 }
 
+// Plot matrix
 function plot(matix, class_nodes,nodes){
-  // if (hh) console.log(hh)
-  // console.log(matix, class_nodes,nodes)
-  var rect_size = 40
+        var rect_size = 40
 
-  d3.selectAll("#matrix_plot svg").remove();
+        d3.selectAll("#matrix_plot svg").remove();
 
 
         var div = d3.select("body")
@@ -505,7 +402,6 @@ function plot(matix, class_nodes,nodes){
                               .attr("width", 800)
                               .attr("height", 400);
 
-         // <svg style="width:1650px;height:1650px;border:1px lightgray solid;" > </svg>
          svg_container.append("g")
                       .attr("transform", "translate(150,150)")
                       .attr("id", "adjacencyG")
@@ -522,7 +418,6 @@ function plot(matix, class_nodes,nodes){
                       .style("fill", function (d) {
                         // console.log(d.weight, d)
                             if (d.weight !== 'abc') {
-
                                 if (+d3.round(d.weight ,3) < 0) {
                                   return "#99d8c9";
                                 }
@@ -532,20 +427,19 @@ function plot(matix, class_nodes,nodes){
                             else
                               return "#eff0f2"
                       })
-              //  .style("fill-opacity", function (d) {    return +d3.round(d.weight , 1)})
-              .on("click", show_Glyph)
-              .on("mousemove", function(d){
-                  div.style("left", d3.event.pageX+10+"px");
-                  div.style("top", d3.event.pageY-25+"px");
-                  div.style("display", "inline-block");
-                  div.html((d.id));
-              })
+                      .on("click", show_Glyph)
+                      .on("mousemove", function(d){
+                          div.style("left", d3.event.pageX+10+"px");
+                          div.style("top", d3.event.pageY-25+"px");
+                          div.style("display", "inline-block");
+                          div.html((d.id));
+                      })
 
-              .on("mouseout", function(d){
-                  div.style("display", "none");
-              });
+                      .on("mouseout", function(d){
+                          div.style("display", "none");
+                      });
               // console.log(nodes, class_nodes)
-              if (nodes && class_nodes){
+         if (nodes && class_nodes){
                   var x_scaleSize = nodes.length * rect_size;
                   var y_scaleSize = class_nodes.length * rect_size;
                   var x_scale = d3.scale.ordinal().domain(nodes.map(function (el) {  return el.id})).rangePoints([0,x_scaleSize],1);
@@ -556,13 +450,12 @@ function plot(matix, class_nodes,nodes){
                   yAxis = d3.svg.axis().scale(y_scale).orient("left").tickSize(4);    
                   d3.select("#adjacencyG").append("g").call(xAxis).selectAll("text").style("text-anchor", "end").style ('font-size', 14).attr("transform", "translate(-25,-5) rotate(90)");
                   d3.select("#adjacencyG").append("g").call(yAxis); //.selectAll("text").style("text-anchor", "end").style ('font-size', 14).attr("transform", "translate(0,0) rotate(0)");
-              }
+         }
               
-              function gridOver(d,i) {
-                d3.selectAll("rect").style("stroke-width", function (p) {return p.x == d.x || p.y == d.y ? "3px" : "1px"})
-                
-              }
-      }
+         function gridOver(d,i) {
+              d3.selectAll("rect").style("stroke-width", function (p) {return p.x == d.x || p.y == d.y ? "3px" : "1px"})
+         }
+}
 
 initialize();
 
@@ -581,8 +474,7 @@ function showDetail(d,i){
             .style("font-size","15px")
             .text( "No interaction found")
         }
-        else
-        {
+        else{
           // console.log(d,i)
             d3.select("#detail_Drug")
               .append("text")
@@ -615,43 +507,31 @@ function showDetail(d,i){
               .html( "Score:   " + "<br/>" + d.weight )
         }
 
-      }
-
-
-
-
+}
+///// Remove diplicates
 function remove_dup_object(obj_array, para){
-
       var len=obj_array.length;
       // console.log(len, para)
       var arr =[];
-
       for ( var i=0 ; i < len; i++ )
           arr[obj_array[i][para]] = obj_array[i];
-
       obj_array = new Array();
       for ( var key in arr )
           obj_array.push(arr[key]);
-
-      // console.log(obj_array, obj_array.length)
-
       return obj_array
 
 }
-
-
-
+//  DDI needs to be splitted
 function drugs_split(str){
-
         /* To remove the square brackets from the drug names */
             str = str.replace(/[\[\]']+/g,'')
             str=  str.split(" ");
             drugs_list.push (str[0].toLowerCase())
             drugs_list.push(str[1].toLowerCase())
             return [str[0].toLowerCase(),str[1].toLowerCase() ]
-    }
+}
 
-
+///// remove duplicates from the drug list
 function remove_duplicates(data){
         // console.log(data)
         /* To remove the duplicate drug names */
@@ -673,12 +553,9 @@ function split_classes(array){
                  class_split_array.push(drug_class)
             }
       }
-
     return class_split_array
 }
 
 function show_Glyph(d){
       console.log(d)
-
-
 }

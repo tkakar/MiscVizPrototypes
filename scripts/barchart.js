@@ -1,3 +1,4 @@
+// ********** Code for barcharts as context rules for displaying the score
 var width = 200;
 var height = 200;
 var color = ['#016c59', '#d0d1e6', '#a6bddb', '#67a9cf', '#1c9099'];
@@ -8,14 +9,13 @@ var obj = {};
 var list = [];
 var drugs_list = [];
 
-/*  Default view is charts with Two drugs*/
+/*  Default view is charts with Two drugs */
 window.onload = function load_glyphs(){
   d3.selectAll("#middle_container > *").remove();
   read_data(2)  
 }
 
 /*For any searched drug*/
-
 d3.select('#search_txbox').on('change', function() {
 
     d3.select("h2").text("Graphs for searched Drug: " + this.value);
@@ -82,8 +82,7 @@ function search_Drugs(searchDrug){
 }
 function read_data(Drugs){
   
-    d3.text("data/data.csv", function(unparsedData)
-      {
+    d3.text("data/data.csv", function(unparsedData){
        var data = d3.csv.parseRows(unparsedData);
        for ( var row=0; row<data.length;row++){
             var id = data[row][0]
@@ -107,7 +106,7 @@ function read_data(Drugs){
                 list = []
             }
        }
-     });
+    });
 }
 
 
@@ -124,11 +123,7 @@ function plot(data,id, ADR, No_of_drugs){
           var y =  d3.scale.linear().range([height-margin.top-margin.bottom, 0]);
           var x1 = d3.scale.ordinal().domain(d3.range(No_of_drugs-1)).rangeBands([0, x0.rangeBand()]);
 
-          x0.domain(data.map(function(d) {
-           return d.name; }));
-     
-          // x1.domain(fields).rangeRoundBands([0,x0.rangeBand()]);
-
+          x0.domain(data.map(function(d) {return d.name; }));
           y.domain([0,100])
 
          var xAxis = d3.svg.axis()
@@ -237,13 +232,6 @@ function plot(data,id, ADR, No_of_drugs){
                 .on("mouseout", function(d){
                     div.style("display", "none");
                 });   
-                // return "translate(" + x1(d.name) + ",0)"; });
-            
-            // svg.append("g").attr("class", "y label")
-            //   .attr("transform", "rotate(-90)")
-            //   .append("text").attr("x", -(height-margin.left-margin.right)/2)
-            //   .attr("y",-40).attr("text-anchor", "middle")
-            //   .text("Confidence for subsets"); 
 
             svg.append("g").attr("class", "x label")
               .attr("transform", "rotate(0)")
@@ -254,7 +242,6 @@ function plot(data,id, ADR, No_of_drugs){
  
 
 function drugs_split(str){
-
         /* To remove the square brackets from the drug names, and split mulitple drugs */
             str = str.replace(/[\[\]']+/g,'')
             str=  str.split(" ");
@@ -262,6 +249,4 @@ function drugs_split(str){
             for (i = 0; i < str.length; i++){
               drugs_list.push(str[i])
             }
-
-          
 }

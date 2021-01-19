@@ -6,8 +6,7 @@ var overall = [];
 var main_obj= {}
 
 
-    d3.text("data/data.csv", function(unparsedData)
-      {
+d3.text("data/data.csv", function(unparsedData){
        var data = d3.csv.parseRows(unparsedData);
        for ( var row=0; row<data.length;row++){
             var id = data[row][0]
@@ -38,12 +37,11 @@ var main_obj= {}
        }
        // console.log(overall)
        buildVis(overall)
-     });
+});
 
 
 function buildVis(d) {
-
-var vis = d3.select('#drug_svg'),
+    var vis = d3.select('#drug_svg'),
     WIDTH = 1000,
     HEIGHT = 500,
     MARGINS = {
@@ -73,45 +71,23 @@ var vis = d3.select('#drug_svg'),
       .orient('left')
       .tickSubdivide(true);
 
-      //label = d3.svg.text()
+    vis.selectAll("dot")  
+      .data(d)                   
+      .enter().append("circle")               
+      .attr("r", 2) 
+      .style("fill", "red")  
+      .attr("cx", function(d) { return xRange(d.id); })     
+      .attr("cy", function(d) { return yRange(d.score); });
 
+    // Adding xAxis
+    vis.append('svg:g')
+      .attr('class', 'x axis')
+      .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
+      .call(xAxis);
 
-  vis.selectAll("dot")  
-    .data(d)                   
-    .enter().append("circle")               
-    .attr("r", 2) 
-    .style("fill", "red")  
-    // .style("fill", function(d) {
-    //         if (d.student=="Yes" && d.default =="No") {return "#FFA500"}
-    //         else if (d.student=="Yes" && d.default =="Yes") {return "#0000CD"}
-    //         else if (d.student=="No" && d.default =="Yes") {return "#CC0000"}
-    //         else { return "#00FA9A" }  
-    // ;})
-   // .on('mouseover', function(d) { d3.select(this).style('fill', 'black'); })
-    //.on("mouseout",  function(d) { d3.select(this).style("fill", "cyan");  })
-    .attr("cx", function(d) { return xRange(d.id); })     
-    .attr("cy", function(d) { return yRange(d.score); });
-        //.on('mouseover', function() { d3.select(this).attr('fill', 'yellow'); })
-        
-
-  // vis.selectAll('circle')
-  // .data(d)
-  // .filter(function(d) { return d.student=="Yes" && d.default =="No"; })
-  // //.style('fill', function(d, i) { })
-  // .on('mouseover', function(d,i) { d3.select(this).style('fill', 'black'); });
- 
-// Adding xAxis
-vis.append('svg:g')
-  .attr('class', 'x axis')
-  .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
-  .call(xAxis);
-
-// Adding yAxis
-vis.append('svg:g')
-  .attr('class', 'y axis')
-  .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
-  .call(yAxis);
+    // Adding yAxis
+    vis.append('svg:g')
+      .attr('class', 'y axis')
+      .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
+      .call(yAxis);
 }
-
-
-</script>
